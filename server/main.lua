@@ -80,6 +80,20 @@ AddEventHandler('esx_society:withdrawMoney', function(societyName, amount)
 	end
 end)
 
+RegisterServerEvent('esx_society:AddMoney')
+AddEventHandler('esx_society:AddMoney', function(societyName, amount)
+    local society = GetSociety(societyName)
+    amount = ESX.Math.Round(tonumber(amount))
+		
+        TriggerEvent('esx_addonaccount:getSharedAccount', society.account, function(account)
+            if amount > 0 then
+							account.addMoney(amount)
+            else
+                print('invalid_amount')
+            end
+        end)
+end)
+
 RegisterServerEvent('esx_society:depositMoney')
 AddEventHandler('esx_society:depositMoney', function(societyName, amount)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -99,6 +113,25 @@ AddEventHandler('esx_society:depositMoney', function(societyName, amount)
 	else
 		print(('esx_society: %s attempted to call depositMoney!'):format(xPlayer.identifier))
 	end
+end)
+
+RegisterServerEvent('esx_society:RemoveMoney')
+AddEventHandler('esx_society:RemoveMoney', function(societyName, amount)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local society = GetSociety(societyName)
+    amount = ESX.Math.Round(tonumber(amount))
+
+    if xPlayer.job.name == society.name then
+        TriggerEvent('esx_addonaccount:getSharedAccount', society.account, function(account)
+            if amount > 0 and account.money >= amount then
+                account.removeMoney(amount)
+            else
+                xPlayer.showNotification(_U('invalid_amount'))
+            end
+        end)
+    else
+        print(('esx_society: %s attempted to call RemoveMoney!'):format(xPlayer.identifier))
+    end
 end)
 
 RegisterServerEvent('esx_society:washMoney')

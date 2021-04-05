@@ -42,12 +42,18 @@ local amount  = 100
 TriggerServerEvent('esx_society:withdrawMoney', society, amount)
 TriggerServerEvent('esx_society:depositMoney', society, amount)
 TriggerServerEvent('esx_society:washMoney', society, amount)
-
+TriggerServerEvent('esx_society:AddMoney', society, amount)
+TriggerServerEvent('esx_society:RemoveMoney', society, amount)
 
 TriggerEvent('esx_society:openBossMenu', society, function (data, menu)
 	menu.close()
 end, {wash = false}) -- set custom options, e.g disable washing
 ```
+- WithdrawMoney - remove from society, add to user.
+- depositMoney - remove from user, add to society.
+- washMoney - wash dirty money.
+- AddMoney - Add to society.
+- RemoveMoney - Remove from society. 
 
 # Legal
 ### License
