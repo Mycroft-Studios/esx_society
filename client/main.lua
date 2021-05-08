@@ -21,13 +21,30 @@ Citizen.CreateThread(function()
 		if Department then
 			PlayerDepartment = Department
 		end
-		end)
+		print(Department)
+        print(PlayerDepartment)
+	end)
 end)
 
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
 	ESX.PlayerData.job = job
 	RefreshBussHUD()
+end)
+
+function RefreshDepartment()
+	ESX.TriggerServerCallback('esx_policejob:getPlayerDepartment', function(Department)
+		if Department then
+			PlayerDepartment = Department
+		end
+		print(Department)
+        print(PlayerDepartment)
+	end)
+end
+
+RegisterNetEvent('esx_policejob:refreshDepartment')
+AddEventHandler('esx_policejob:refreshDepartment', function()
+	RefreshDepartment()
 end)
 
 function RefreshBussHUD()
