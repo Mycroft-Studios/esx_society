@@ -39,7 +39,7 @@ function RefreshBussHUD()
 		
 		ESX.TriggerServerCallback('esx_society:getSocietyMoney', function(money)
 			UpdateSocietyMoneyHUDElement(money)
-		end, ESX.PlayerData.job.name)
+		end, PlayerDepartment)
 	end
 end
 end
@@ -47,7 +47,7 @@ end
 RegisterNetEvent('esx_addonaccount:setMoney')
 AddEventHandler('esx_addonaccount:setMoney', function(society, money)
 	for i=1, #Config.BossGrades, 1 do
-		if ESX.PlayerData.job and ESX.PlayerData.job.grade_name == Config.BossGrades[i] and 'society_' .. ESX.PlayerData.job.name == society then
+		if ESX.PlayerData.job and ESX.PlayerData.job.grade_name == Config.BossGrades[i] and 'society_' .. PlayerDepartment == society then
 			UpdateSocietyMoneyHUDElement(money)
 		end
 	end
